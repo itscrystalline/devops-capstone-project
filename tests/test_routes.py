@@ -205,7 +205,6 @@ class TestAccountService(TestCase):
                                    content_type="application/json")
         self.assertEqual(get_resp.status_code, status.HTTP_404_NOT_FOUND)
 
-
     def test_https(self):
         """It should return some HTTPS headers"""
         resp = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
@@ -219,3 +218,10 @@ class TestAccountService(TestCase):
         }
         for key, value in header_wants.items():
             self.assertEqual(resp.headers.get(key), value)
+
+    def test_cors(self):
+        """It should return CORS headers"""
+        resp = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+
+        self.assertEqual(resp.headers.get("Access-Control-Allow-Origin"), "*")
