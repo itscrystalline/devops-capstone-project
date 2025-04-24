@@ -45,6 +45,7 @@
       }
     ];
   };
+  processes."webui".exec = "gunicorn --workers=1 --bind 0.0.0.0:5000 --log-level=info service:app";
 
   # https://devenv.sh/scripts/
   # scripts.hello.exec = ''
