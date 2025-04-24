@@ -181,3 +181,11 @@ class TestAccountService(TestCase):
         # get the data from resp.get_json() as updated_account
         # assert that the updated_account["name"] is whatever you changed it to
         self.assertEqual(put_resp.get_json()["name"], "John Smith")
+
+    def test_update_invalid_account(self):
+        """It should not update a nonexistent Account"""
+        dummy = AccountFactory()
+        # update the account
+        put_resp = self.client.put(f"{BASE_URL}/0", json=dummy.serialize())
+        # assert that the resp.status_code is status.HTTP_200_OK
+        self.assertEqual(put_resp.status_code, status.HTTP_404_NOT_FOUND)
