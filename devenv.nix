@@ -13,6 +13,7 @@
     k3d
     tektoncd-cli
     openshift
+    act
   ];
 
   # https://devenv.sh/languages/
