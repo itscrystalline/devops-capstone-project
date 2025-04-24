@@ -10,7 +10,9 @@
   # https://devenv.sh/packages/
   packages = with pkgs; [
     git
-    k3d
+    (k3d.override {
+      k3sVersion = "1.32.1-k3s1";
+    })
     k3s
     tektoncd-cli
     openshift

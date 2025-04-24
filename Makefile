@@ -8,7 +8,7 @@ all: help
 .PHONY: cluster
 cluster: ## Create a Kubernetes cluster
 	$(info Creating Kubernetes cluster with a registry...)
-	k3d cluster create --registry-create cluster-registry:0.0.0.0:32000 --port '8080:80@loadbalancer'
+	k3d cluster create --k3s-arg '--kubelet-arg=feature-gates=KubeletInUserNamespace=true@server:*' --registry-create cluster-registry:0.0.0.0:32000 --port '8080:80@loadbalancer'
 
 .PHONY: tekton
 tekton: ## Install Tekton into cluster
