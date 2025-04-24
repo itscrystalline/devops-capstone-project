@@ -189,3 +189,15 @@ class TestAccountService(TestCase):
         put_resp = self.client.put(f"{BASE_URL}/0", json=dummy.serialize())
         # assert that the resp.status_code is status.HTTP_200_OK
         self.assertEqual(put_resp.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_account(self):
+        """It should be able to delete an existing account"""
+        test_acc = self._create_accounts(1)[0]
+
+        resp = self.client.delete(f"{BASE_URL}/{test_acc.id}")
+        self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
+
+        # It should fail getting the id now
+        get_resp = self.client.get(f"{BASE_URL}/{test_acc.id}",
+                                   content_type="application/json")
+        self.assertEqual(get_resp.status_code, status.HTTP_404_NOT_FOUND)
