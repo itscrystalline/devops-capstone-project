@@ -11,6 +11,7 @@
   packages = with pkgs; [
     git
     k3d
+    k3s
     tektoncd-cli
     openshift
     act
@@ -50,6 +51,7 @@
 
   enterShell = ''
     git --version
+    export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
   '';
 
   # https://devenv.sh/tasks/
