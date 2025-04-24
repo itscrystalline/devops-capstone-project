@@ -124,6 +124,16 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     # ADD YOUR TEST CASES HERE ...
+    def test_invalid_path(self):
+        """It should not allow accessing an undefined path"""
+        resp = self.client.get("/invalid")
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_invalid_method(self):
+        """It should not allow an invalid API call"""
+        resp = self.client.delete(BASE_URL)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
     def test_list_accounts(self):
         """It should create and list 5 accounts"""
         self._create_accounts(5)
