@@ -16,7 +16,7 @@ tekton: ## Install Tekton into cluster
 	kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
 	kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/release.yaml
 	kubectl apply --filename https://storage.googleapis.com/tekton-releases/triggers/latest/interceptors.yaml
-	kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml
+	kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/release.yaml
 
 .PHONY: clustertasks
 clustertasks: ## Create Tekton Cluster Tasks
