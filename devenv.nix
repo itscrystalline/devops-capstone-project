@@ -17,6 +17,7 @@
     tektoncd-cli
     openshift
     act
+    openssl
   ];
 
   # https://devenv.sh/languages/
@@ -45,7 +46,7 @@
       }
     ];
   };
-  processes."webui".exec = "gunicorn --workers=1 --bind 0.0.0.0:5000 --log-level=info service:app";
+  processes."webui".exec = "gunicorn --workers=1 --certfile=certs/cert.pem --keyfile=certs/key.pem --bind 0.0.0.0:5000 --log-level=info service:app";
 
   # https://devenv.sh/scripts/
   # scripts.hello.exec = ''
@@ -58,10 +59,13 @@
   '';
 
   # https://devenv.sh/tasks/
-  # tasks = {
-  #   "myproj:setup".exec = "mytool build";
-  #   "devenv:enterShell".after = [ "myproj:setup" ];
-  # };
+  tasks = {
+    "certs:setup" = {
+      exec = "mkdir -p certs; ${pkgs.openssl}/bin/openssl req -x509 -newkey rsa:2048 -nodes -keyout certs/key.pem -out certs/cert.pem -days 365 -subj \"/C=US/ST=Dev/L=Local/O=LocalDev/OU=Dev/CN=localhost\"";
+      status = "ls certs/cert.pem certs/key.pem";
+    };
+    "devenv:enterShell".after = ["certs:setup"];
+  };
 
   # https://devenv.sh/tests/
   enterTest = ''
