@@ -18,6 +18,7 @@
     openshift
     act
     openssl
+    ibmcloud-cli
   ];
 
   # https://devenv.sh/languages/
